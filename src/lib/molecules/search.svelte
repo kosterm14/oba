@@ -177,8 +177,7 @@
 		position: absolute;
 		right: 0%;
 		margin-top: -43rem;
-		padding: 0.3rem 1rem;
-		height: 2rem;
+		padding: 0.5rem 1rem;
 		border-radius: var(--primary-table-border-radius);
 		background-color: var(--primary-light-color);
 		color: var(--primary-dark-color);
@@ -195,8 +194,8 @@
 	}
 
 	.zoek-icon {
-		height: 28px;
-		display: grid;	
+		height: 33px;
+		display: grid;
 	}
 
 	p,
