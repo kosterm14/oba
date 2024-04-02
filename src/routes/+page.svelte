@@ -1,6 +1,15 @@
 <script>
 	// Hier import ik de components die nodig zijn in deze pagina
-	import { Card, LinkButton, LogoBlue, LogoRed, LogoBlack, Search, Nav } from '$lib/index.js';
+	import {
+		Card,
+		LinkButton,
+		LogoBlue,
+		LogoRed,
+		LogoBlack,
+		Search,
+		Nav,
+		HeroLogo
+	} from '$lib/index.js';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -60,9 +69,7 @@
 		</h1>
 		<p>{homepage[0].homepageText}</p>
 	</article>
-	<article class="logo">
-		<img class="logo-img" src={LogoBlack} alt="oba logo" />
-	</article>
+	<HeroLogo />
 </section>
 
 <section>
@@ -96,7 +103,7 @@
 			</div>
 		</div>
 		<div id="voorbeeld-1">
-			<div class="carrousel-a">
+			<div class="carrousel-a side-trans-white">
 				{#each data.apiBooks.results.slice(0, 5) as book}
 					<Card
 						bookAuthor={book.authors}
@@ -143,7 +150,7 @@
 			</div>
 		</div>
 		<div id="voorbeeld-2">
-			<div class="carrousel-a">
+			<div class="carrousel-a side-trans-blue">
 				{#each data.apiEBooks.results.slice(0, 5) as book}
 					<Card
 						bookAuthor={book.authors}
@@ -189,7 +196,7 @@
 			</div>
 		</div>
 		<div id="voorbeeld-3">
-			<div class="carrousel-a">
+			<div class="carrousel-a side-trans-white">
 				{#each data.apiAudioBooks.results.slice(0, 5) as book}
 					<Card
 						bookAuthor={book.authors}
@@ -233,7 +240,7 @@
 		</article>
 	</div>
 	<article id="voorbeeld-4" class="centerCarousel">
-		<div class="carrousel-a">
+		<div class="carrousel-a side-trans-blue">
 			{#each hygraphData.activiteitens.slice(0, 5) as activiteiten}
 				<a href={activiteiten.activiteitLink}>
 					<img
@@ -266,7 +273,7 @@
 		background-color: #18191a;
 		color: white;
 	}
-	
+
 	.carrousel-a {
 		display: flex;
 		gap: 15px;
@@ -297,10 +304,6 @@
 		width: 100%;
 		padding: 10px;
 		-webkit-justify-content: flex-start;
-	}
-
-	.logo-img {
-		width: 100%;
 	}
 
 	.nav-btn-right {
@@ -358,6 +361,7 @@
 		-webkit-align-items: center;
 		-webkit-box-align: center;
 		border: none;
+		cursor: pointer;
 	}
 
 	section {
@@ -379,14 +383,11 @@
 		padding: 2rem 0;
 	}
 
-	.logo {
-		padding: 0;
-	}
-
 	.carousel-container {
 		width: 580px;
 		max-width: 90%;
 		padding: 10px;
+		position: relative;
 	}
 
 	.carousel {
@@ -409,6 +410,45 @@
 		justify-content: flex-start;
 	}
 
+	/* Transparantie in de zijkant van de carrousels  */
+	.side-trans-white::before,
+	.side-trans-white::after {
+		content: '';
+		z-index: 99;
+		position: absolute;
+		top: 0;
+		left: -0.5rem;
+		width: 3rem;
+		height: 100%;
+		background: rgb(255, 255, 255);
+		background: linear-gradient(90deg, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
+	}
+
+	.side-trans-white::after {
+		left: auto;
+		right: -1rem;
+		background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+	}
+
+	.side-trans-blue::before,
+	.side-trans-blue::after {
+		content: '';
+		z-index: 99;
+		position: absolute;
+		top: 0;
+		left: -0.5rem;
+		width: 3rem;
+		height: 100%;
+		background: var(--primary-background-color);
+		background: var(--primary-transparent-color);
+	}
+
+	.side-trans-blue::after {
+		left: auto;
+		right: -1rem;
+		background: var(--primary-transparent-color-after);
+	}
+
 	@keyframes tostart {
 		75% {
 			left: 0;
@@ -424,7 +464,7 @@
 		}
 	}
 
-	@media only screen and (min-width: 45rem) {
+	@media only screen and (min-width: 875px) {
 		section {
 			height: 65vh;
 			display: flex;
@@ -446,9 +486,6 @@
 			padding: 5rem 0;
 		} */
 
-		.logo {
-			width: 50%;
-		}
 		.about {
 			height: 100%;
 			display: flex;
@@ -471,6 +508,7 @@
 			scroll-behavior: smooth;
 			animation-name: tostart;
 			scrollbar-width: none;
+			position: relative;
 		}
 		.centerCarousel a {
 			text-decoration: none;
