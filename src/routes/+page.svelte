@@ -417,7 +417,7 @@
 		}
 	}
 
-	@media only screen and (min-width: 45rem) {
+	@media only screen and (min-width: 875px) {
 		section {
 			height: 65vh;
 			display: flex;
