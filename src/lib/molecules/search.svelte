@@ -54,7 +54,7 @@
 	}
 </script>
 
-<section class="disable-js">
+<!-- <section class="disable-js">
 	<div on:click={openDialog} class="button">
 		<form action="" on:submit={submitted}>
 			<input
@@ -98,7 +98,7 @@
 			{/if}
 		</div>
 	{/if}
-</section>
+</section> -->
 
 <style>
 	.card-data:hover {
