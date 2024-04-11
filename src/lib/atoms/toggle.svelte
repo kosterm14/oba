@@ -30,7 +30,8 @@
 </script>
 
 <div class="theme-switch disable-js">
-	<div class="theme-title">Verander thema</div>
+	<svg width="30px" height="30px" viewBox="-6.4 -6.4 76.80 76.80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#ffffff" stroke-width="3.2"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><polygon points="20 56 56 20 44 8 8 44 8 56 20 56"></polygon><line x1="12" y1="40" x2="24" y2="52"></line><line x1="36" y1="16" x2="48" y2="28"></line></g></svg>
+	<div class="theme-title">Thema</div>
 	<div class="button toggle" id="button-3">
 		<input type="checkbox" class="theme-toggle" />
 		<div class="knobs"></div>
@@ -43,10 +44,11 @@
 		display: grid;
 		align-items: center;
 		margin: 0;
-		padding: 10px 0;
-		font:
-			700 20px 'Oswald',
-			sans-serif;
+		font: 'Oswald', sans-serif;
+		font-weight: 500;
+		line-height: 65px;
+		text-transform: uppercase;
+		text-decoration: uppercase;
 		-webkit-transition: all 0.3s ease;
 		transition: all 0.3s ease;
 		color: var(--primary-light-color);
@@ -55,10 +57,16 @@
 	.theme-switch {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		position: relative;
 		width: 100%;
 		padding: 0px 0 2.5rem 0;
+		margin-left: -16px;
 		box-sizing: border-box;
+	}
+
+	svg {
+		margin-right: 10px;
 	}
 
 	.knobs,
@@ -72,8 +80,8 @@
 
 	.button {
 		position: relative;
-		width: 4.7rem;
-		height: 2.25rem;
+		width: 3.5rem;
+		height: 1.7rem;
 		margin-left: 20px;
 		overflow: hidden;
 	}
@@ -113,10 +121,10 @@
 	#button-3 .knobs:before {
 		content: '';
 		position: absolute;
-		top: 4px;
+		top: 2px;
 		left: 4px;
-		width: 20px;
-		height: 10px;
+		width: 15px;
+		height: 5px;
 		color: #fff;
 		font-size: 12px;
 		font-weight: bold;
@@ -131,17 +139,17 @@
 	}
 
 	#button-3 .theme-toggle:active + .knobs:before {
-		width: 2.9rem;
+		width: 1.9rem;
 		border-radius: 6.25rem;
 	}
 
 	#button-3 .theme-toggle:checked:active + .knobs:before {
-		margin-left: -28px;
+		margin-left: -13px;
 	}
 
 	#button-3 .theme-toggle:checked + .knobs:before {
 		content: '';
-		left: 2.7rem;
+		left: 1.7rem;
 		background-color: var(--primary-accent-color);
 	}
 	#button-3 .theme-toggle:checked ~ .layer {
