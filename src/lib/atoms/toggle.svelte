@@ -61,7 +61,7 @@
 		position: relative;
 		width: 100%;
 		padding: 0px 0 2.5rem 0;
-		margin-left: -5px;
+		margin-left: -16px;
 		box-sizing: border-box;
 	}
 

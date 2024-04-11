@@ -103,12 +103,12 @@
 	header {
 		display: flex;
 		align-items: center;
-		margin-left: 40px;
 	}
 	header .profile-img {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin-left: 40px;
 	}
 	header .profile-img img {
 		width: 2.7rem;
@@ -143,7 +143,7 @@
 		color: white;
 		font-weight: 500;
 		line-height: 65px;
-		padding-left: 30px;
+		padding-left: 20px;
 		box-sizing: border-box;
 		border-left: 5px solid transparent;
 		font-family: 'Oswald', sans-serif;
