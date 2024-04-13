@@ -93,7 +93,7 @@
 		></span
 	>
 </label>
-<nav class="sidebar">
+<nav id="sidebar" class="sidebar">
 	<header>
 		<div class="profile-img">
 			<img
@@ -308,7 +308,7 @@
 		>
 	</label>
 
-	<div class="search-bar">
+	<div id="search-bar" class="search-bar">
 		<form>
 			<div class="searchBar">
 				<input
@@ -335,12 +335,10 @@
 	/* HAMBURG SEARCH-BAR*/
 	label #search-closed,
 	label #search-open {
-		position: absolute;
-		left: 50px;
+		position: fixed;
 		cursor: pointer;
 		color: white;
-		border-radius: 0 0 0 5px;
-		margin: 0 30px 30px 50px;
+		margin: 0 30px 30px 100px;
 		font-size: 29px;
 		background-color: var(--primary-transparent-color-2);
 		height: 50px;
@@ -351,10 +349,19 @@
 		display: grid;
 		align-items: center;
 		justify-content: center;
+		z-index: 99;
 	}
-
+	label #search-closed {
+		border-radius: 0 0 0 5px;
+	}
+	label #search-open {
+		border-radius: 0 0 5px 	5px;
+	}
 	#search {
 		display: none;
+	}
+	#search-bar {
+		transition: all 0.8s ease;
 	}
 
 	label #search-closed {
@@ -368,14 +375,31 @@
 	#search:checked ~ label #search-closed {
 		opacity: 1;
 		visibility: visible;
+		height: 50px;
+		width: 50px;
+	}
+	#search:checked ~ #search-bar {
+		width: 21.25rem;
+	}
+	#search:checked ~ div #searchQuerySubmit {
+		width: 3.5rem;
+		height: 2.8rem;
+	}
+	#search:checked ~ div #searchQueryInput  {
+		padding: 0 3.5rem 0 1.5rem;
+	}
+	#search:checked ~ label #search-closed {
+		opacity: 1;
+		visibility: visible;
 	}
 	/* END HAMBURG */
 
 	/* SEARCHBAR */
 	.search-bar {
-		position: absolute;
-		width: 21.25rem;
-		left: 150px;
+		position: fixed;
+		width: 0;
+		margin-left: 150px;
+		z-index: 99;
 	}
 
 	form {
@@ -404,13 +428,13 @@
 		outline: none;
 		border: none;
 		border-radius: 0 0 5px 0;
-		padding: 0 3.5rem 0 1.5rem;
 		font-size: 1rem;
+		transition: all 1s ease;
 	}
 
 	#searchQuerySubmit {
-		width: 3.5rem;
-		height: 2.8rem;
+		width: 0;
+		height: 0;
 		margin-left: -3.5rem;
 		background: none;
 		border: none;
@@ -418,6 +442,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		transition: all 0.5s ease;
 	}
 
 	#searchQuerySubmit:hover {
@@ -425,7 +450,7 @@
 	}
 
 	#check:checked ~ #search-field {
-		margin-left: 220px;
+		margin-left: 225px;
 	}
 
 	#search-field {
@@ -524,11 +549,11 @@
 	}
 	label #btn,
 	label #cancel {
-		position: absolute;
+		position: fixed;
 		cursor: pointer;
 		color: white;
 		border-radius: 0 0 5px 5px;
-		margin-left: 30px;
+		margin-left: 25px;
 		font-size: 29px;
 		background-color: var(--primary-transparent-color-2);
 		height: 50px;
@@ -539,6 +564,7 @@
 		display: grid;
 		align-items: center;
 		justify-content: center;
+		z-index: 99;
 	}
 	label #cancel {
 		opacity: 0;
