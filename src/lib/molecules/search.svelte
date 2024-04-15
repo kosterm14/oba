@@ -524,7 +524,6 @@
 	.bottom-content {
 		border-top: 1px solid white;
 	}
-
 	.sidebar a {
 		display: flex;
 		height: 65px;
