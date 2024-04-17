@@ -55,7 +55,7 @@
 </script>
 
 <header>
-	<Nav />
+	<!-- <Nav /> -->
 	<Search
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
