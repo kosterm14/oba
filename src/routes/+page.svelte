@@ -6,8 +6,7 @@
 		LogoBlue,
 		LogoRed,
 		LogoBlack,
-		Search,
-		Nav,
+		Header,
 		HeroLogo
 	} from '$lib/index.js';
 	import { onMount } from 'svelte';
@@ -56,7 +55,7 @@
 
 <header>
 	<!-- <Nav /> -->
-	<Search
+	<Header
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
 	<!-- menu  -->

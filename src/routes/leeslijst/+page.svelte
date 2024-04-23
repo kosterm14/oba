@@ -1,5 +1,5 @@
 <script>
-	import { Card, Nav, Search } from '$lib/index.js';
+	import { Card, Header } from '$lib/index.js';
 	import { onMount } from 'svelte';
 
 	export let data;
@@ -10,8 +10,7 @@
 </script>
 
 <header>
-	<Nav />
-	<Search
+	<Header
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
 </header>
