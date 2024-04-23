@@ -1,10 +1,79 @@
 <script>
 	import { Toggle } from '$lib/index.js';
 	import { onMount } from 'svelte';
+	import { Card } from '$lib/index.js';
+	import { Searchsvg } from '$lib/index.js';
+
+	export let cardData;
+	let value = '';
+	let error = '';
+	let showDialog = false;
+
+	function openDialog() {
+		showDialog = true;
+	}
+
+	function closeDialog() {
+		showDialog = false;
+		error = '';
+	}
+	// console.log(cardData)
+
+	onMount(() => {
+		const searchInput = document.querySelector('#searchQueryInput');
+		const searchButton = document.querySelector('#search-open');
+		const searchButtonClose = document.querySelector('#search-closed');
+		const positionChange = document.querySelector('#search-box');
+
+		let searchField = document.querySelector('#search-overlay');
+
+		searchInput.addEventListener('input', submitted);
+
+		searchButton.addEventListener('click', classToggle);
+		searchButtonClose?.addEventListener('click', classToggle);
+		positionChange?.addEventListener('click', classToggle);
+
+		function classToggle() {
+			searchField.classList.toggle('opened');
+			searchButtonClose.classList.toggle('openend-button');
+			positionChange.classList.toggle('position-change');
+		}
+
+		// PE Zet iets uit wanner Javascript niet werkt
+		const icon = document.querySelector('.disable-js');
+		icon?.classList.toggle('disable-js');
+
+		return () => {
+			// Cleanup event listener when component is unmounted
+			searchInput.removeEventListener('input', submitted);
+		};
+	});
+
+	function submitted(event) {
+		event.preventDefault();
+
+		const searchValue = event.target.value.toLowerCase();
+		const filteredCards = Object.values(cardData).filter((card) =>
+			card.frabl.key1.toLowerCase().includes(searchValue)
+		);
+
+		if (filteredCards.length === 0) {
+			error = 'Geen resultaten gevonden';
+		} else {
+			cardData = filteredCards;
+			error = '';
+		}
+		if (searchValue.trim() === '') {
+			closeDialog();
+		}
+	}
 </script>
 
 <input type="checkbox" id="check" />
 <label for="check">
+	<span class="opened"></span>
+	<span class="openend-button"></span>
+	<span class="position-change"></span>
 	<span class="" id="btn"
 		><svg
 			width="30px"
@@ -276,69 +345,175 @@
 	</div>
 </nav>
 
-<section id="search-field">
-	<input type="checkbox" id="search" />
-	<label for="search">
-		<span class="search-hamburg-closed" id="search-closed"
-			><svg
-				fill="#ffffff"
-				width="30px"
-				height="30px"
-				viewBox="-3.2 -3.2 38.40 38.40"
-				xmlns="http://www.w3.org/2000/svg"
-				stroke="#ffffff"
-				><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-					id="SVGRepo_tracerCarrier"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				></g><g id="SVGRepo_iconCarrier">
-					<path
-						d="M18.8,16l5.5-5.5c0.8-0.8,0.8-2,0-2.8l0,0C24,7.3,23.5,7,23,7c-0.5,0-1,0.2-1.4,0.6L16,13.2l-5.5-5.5 c-0.8-0.8-2.1-0.8-2.8,0C7.3,8,7,8.5,7,9.1s0.2,1,0.6,1.4l5.5,5.5l-5.5,5.5C7.3,21.9,7,22.4,7,23c0,0.5,0.2,1,0.6,1.4 C8,24.8,8.5,25,9,25c0.5,0,1-0.2,1.4-0.6l5.5-5.5l5.5,5.5c0.8,0.8,2.1,0.8,2.8,0c0.8-0.8,0.8-2.1,0-2.8L18.8,16z"
-					></path>
-				</g></svg
-			></span
-		>
-		<span class="search-hamburg-open" id="search-open">
-			<svg style="width:24px;height:24px" viewBox="0 0 24 24"
-				><path
-					fill="#ffffff"
-					d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
-				/>
-			</svg></span
-		>
-	</label>
+<div id="search-overlay">
+	<div on:click={openDialog} id="search-bar" class="search-bar-mobile">
+		<form action="" on:submit={submitted} class="searchBar">
+			<input
+				id="searchQueryInput"
+				class="search-input-mobile"
+				type="text"
+				name="search"
+				bind:value
+				autocomplete="off"
+				placeholder="Waar ben je naar opzoek?"
+			/>
+			<a
+				class="search-submit-mobile"
+				id="searchQuerySubmit"
+				type="submit"
+				name="searchQuerySubmit"
+				href={value}
+			>
+				<svg style="width:24px;height:24px" viewBox="0 0 24 24"
+					><path
+						fill="#666666"
+						d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
+					/>
+				</svg>
+			</a>
+		</form>
+	</div>
 
-	<div id="search-bar" class="search-bar">
-		<form>
-			<div class="searchBar">
+	{#if showDialog}
+		<div class="mobile-model" id="model">
+			<p class="title-hero">Je zoekt: <span>{value}</span></p>
+			<!-- <article>
+			<button class="close-button" on:click={closeDialog}>X</button>
+		</article> -->
+			{#if error}
+				<h2>{error}</h2>
+			{:else}
+				<ul>
+					{#each Object.values(cardData) as card}
+						<a href={card.detailLink}>
+							<li class="card-data">
+								<img
+									src={card.coverimages[0]}
+									alt="foto van {card.frabl.key1}"
+									loading="lazy"
+									width="50"
+									height="50"
+								/>
+								<p class="booktitle">{card.frabl.key1}</p>
+							</li>
+						</a>
+					{/each}
+				</ul>
+			{/if}
+		</div>
+	{/if}
+</div>
+
+<section id="search-field">
+	<div id="search-box">
+		<input type="checkbox" id="search" />
+		<label for="search">
+			<span class="search-hamburg-closed" id="search-closed" on:click={closeDialog}
+				><svg
+					fill="#ffffff"
+					width="30px"
+					height="30px"
+					viewBox="-3.2 -3.2 38.40 38.40"
+					xmlns="http://www.w3.org/2000/svg"
+					stroke="#ffffff"
+					><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+						id="SVGRepo_tracerCarrier"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					></g><g id="SVGRepo_iconCarrier">
+						<path
+							d="M18.8,16l5.5-5.5c0.8-0.8,0.8-2,0-2.8l0,0C24,7.3,23.5,7,23,7c-0.5,0-1,0.2-1.4,0.6L16,13.2l-5.5-5.5 c-0.8-0.8-2.1-0.8-2.8,0C7.3,8,7,8.5,7,9.1s0.2,1,0.6,1.4l5.5,5.5l-5.5,5.5C7.3,21.9,7,22.4,7,23c0,0.5,0.2,1,0.6,1.4 C8,24.8,8.5,25,9,25c0.5,0,1-0.2,1.4-0.6l5.5-5.5l5.5,5.5c0.8,0.8,2.1,0.8,2.8,0c0.8-0.8,0.8-2.1,0-2.8L18.8,16z"
+						></path>
+					</g></svg
+				></span
+			>
+			<span class="search-hamburg-open" id="search-open">
+				<svg style="width:24px;height:24px" viewBox="0 0 24 24"
+					><path
+						fill="#ffffff"
+						d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
+					/>
+				</svg></span
+			>
+		</label>
+
+		<div on:click={openDialog} id="search-bar" class="search-bar">
+			<form action="" on:submit={submitted} class="searchBar">
 				<input
 					id="searchQueryInput"
+					class="search-input"
 					type="text"
-					name="searchQueryInput"
+					name="search"
+					bind:value
+					autocomplete="off"
 					placeholder="Waar ben je naar opzoek?"
-					value=""
 				/>
-				<button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+				<a
+					class="search-submit"
+					id="searchQuerySubmit"
+					type="submit"
+					name="searchQuerySubmit"
+					href={value}
+				>
 					<svg style="width:24px;height:24px" viewBox="0 0 24 24"
 						><path
 							fill="#666666"
 							d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
 						/>
 					</svg>
-				</button>
-			</div>
-		</form>
+				</a>
+			</form>
+		</div>
 	</div>
+	{#if showDialog}
+		<div class="model" id="model">
+			<p class="title-hero">Je zoekt: <span>{value}</span></p>
+			<!-- <article>
+				<button class="close-button" on:click={closeDialog}>X</button>
+			</article> -->
+			{#if error}
+				<h2>{error}</h2>
+			{:else}
+				<ul>
+					{#each Object.values(cardData) as card}
+						<a href={card.detailLink}>
+							<li class="card-data">
+								<img
+									src={card.coverimages[0]}
+									alt="foto van {card.frabl.key1}"
+									loading="lazy"
+									width="50"
+									height="50"
+								/>
+								<p class="booktitle">{card.frabl.key1}</p>
+							</li>
+						</a>
+					{/each}
+				</ul>
+			{/if}
+		</div>
+	{/if}
 </section>
 
 <style>
+	#search-box {
+		position: relative;
+		margin-left: 100px;
+		transition: all 0.5s ease;
+		position: fixed;
+
+	}
+	#check:checked ~ #search-field #model {
+		margin-left: 225px;
+	}
+
 	/* HAMBURG SEARCH-BAR*/
 	label #search-closed,
 	label #search-open {
-		position: fixed;
+		position: absolute;
 		cursor: pointer;
 		color: white;
-		margin: 0 30px 30px 100px;
+
 		font-size: 29px;
 		background-color: var(--primary-transparent-color-2);
 		height: 50px;
@@ -349,7 +524,7 @@
 		display: grid;
 		align-items: center;
 		justify-content: center;
-		z-index: 99;
+		z-index: 80;
 	}
 	label #search-closed {
 		border-radius: 0 0 0 5px;
@@ -381,25 +556,23 @@
 	#search:checked ~ #search-bar {
 		width: 21.25rem;
 	}
-	#search:checked ~ div #searchQuerySubmit {
+	#search:checked ~ div .search-submit {
 		width: 3.5rem;
 		height: 2.8rem;
 	}
-	#search:checked ~ div #searchQueryInput {
+	#search:checked ~ div .search-input {
 		padding: 0 3.5rem 0 1.5rem;
-	}
-	#search:checked ~ label #search-closed {
-		opacity: 1;
-		visibility: visible;
 	}
 	/* END HAMBURG */
 
 	/* SEARCHBAR */
+	.search-bar-mobile {
+	}
 	.search-bar {
-		position: fixed;
+		position: absolute;
 		width: 0;
-		margin-left: 150px;
-		z-index: 99;
+		margin-left: 50px;
+		z-index: 80;
 	}
 
 	form {
@@ -421,7 +594,8 @@
 		align-items: center;
 	}
 
-	#searchQueryInput {
+	.search-input,
+	.search-input-mobile {
 		width: 100%;
 		height: 50px;
 		background: white;
@@ -432,7 +606,12 @@
 		transition: all 1s ease;
 	}
 
-	#searchQuerySubmit {
+	.search-input-mobile {
+		padding-left: 18px;
+		margin-left: 50px;
+	}
+
+	.search-submit {
 		width: 0;
 		height: 0;
 		margin-left: -3.5rem;
@@ -445,18 +624,199 @@
 		transition: all 0.5s ease;
 	}
 
-	#searchQuerySubmit:hover {
+	.search-submit-mobile {
+		width: 35px;
+		height: 35px;
+		margin-left: -7.5rem;
+		background: none;
+		border: none;
+		outline: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.5s ease;
+	}
+
+	.search-submit:hover {
 		cursor: pointer;
 	}
 
-	#check:checked ~ #search-field {
-		margin-left: 225px;
+	#check:checked ~ section #search-box {
+		margin-left: 325px;
 	}
 
 	#search-field {
 		position: relative;
 		transition: all 0.5s ease;
 	}
+
+	.model {
+		backdrop-filter: blur(10px); /* Adjust the blur amount as needed */
+		-webkit-backdrop-filter: blur(10px); /* Safari support */
+		/* Fallback for browsers that do not support backdrop-filter */
+		position: fixed;
+		left: 6.2rem;
+		top: 2.7rem;
+		width: 600px;
+		height: 28.95rem;
+		box-shadow:
+			rgba(0, 0, 0, 0.25) 0 0.875rem 1.75rem,
+			rgba(0, 0, 0, 0.22) 0px 0.625rem 0.625rem;
+		border-radius: 0.625rem;
+		padding: 1rem;
+		overflow-y: auto;
+		z-index: 999;
+		margin-top: 1.1rem;
+		opacity: 97%;
+		background: var(--primary-accent-color);
+		transition: all 0.5s ease;
+	}
+
+	.model li,
+	.mobile-model li {
+		list-style: none;
+		/* border-bottom: 1px solid rgb(172, 171, 171); */
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		transition: all 0.3s ease;
+	}
+
+	.model li img,
+	.mobile-model li img {
+		min-width: 50px;
+	}
+
+	.model ul,
+	.mobile-model ul {
+		padding: 1.5rem;
+	}
+
+	.model p,
+	span,
+	.mobile-model p,
+	span {
+		color: var(--primary-light-color);
+	}
+
+	.model h2,
+	.mobile-model h2 {
+		color: var(--primary-light-color);
+		padding: 1.5rem;
+		text-align: center;
+	}
+
+	.model a,
+	.mobile-model a {
+		text-decoration: none;
+		color: var(--primary-light-color);
+	}
+
+	.model h2,
+	.mobile-model h2 {
+		color: var(--primary-light-color);
+		padding: 1.5rem;
+		text-align: center;
+	}
+
+	.title-hero {
+		font:
+			700 20px 'Oswald',
+			sans-serif;
+	}
+
+	/* .close-button {
+		position: absolute;
+		right: 0%;
+		margin-top: -43rem;
+		padding: 0.5rem 1rem;
+		border-radius: var(--primary-table-border-radius);
+		background-color: var(--primary-light-color);
+		color: var(--primary-dark-color);
+		font-weight: bold;
+		cursor: pointer;
+	} */
+
+	.card-data:hover {
+		background-color: var(--primary-light-color);
+		padding: 0.5rem;
+	}
+
+	.card-data:hover p {
+		color: rgb(61, 61, 61);
+	}
+
+	.booktitle::first-letter {
+		text-transform: capitalize;
+	}
+
+	/* tablet breakpoint */
+	@media (max-width: 960px) {
+		.model {
+			display: none;
+		}
+		#search-overlay {
+			background-color: var(--primary-accent-color);
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 99;
+			margin-left: 0;
+			display: none;
+		}
+
+		#search-closed:checked ~ #search-field #search-box {
+			margin-left: 10px !important;
+		}
+		.opened {
+			display: block !important;
+		}
+
+		.openend-button{
+			position: fixed !important;
+			top: 0;
+			left: 0;
+			z-index: 1000 !important;
+		}
+
+		.position-change{
+			position: static !important;
+		}
+	}
+
+	@media (min-width: 960px) {
+		#search-overlay {
+			display: none;
+		}
+		.opened {
+			display: none;
+		}
+	}
+
+	.mobile-model {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		position: fixed;
+		left: 0;
+		top: 32px;
+		width: 100%;
+		height: 100%;
+		box-shadow: none;
+		border-radius: 0.625rem;
+		padding: 1rem;
+		overflow-y: auto;
+		z-index: 999;
+		/* margin-top: 1.1rem; */
+		opacity: 97%;
+		background: none;
+		transition: all 0.5s ease;
+		margin-left: 0 !important;
+		margin-top: 18px;
+	}
+
 	/* END SEARCHBAR */
 
 	/* NAVIGATION MENU */

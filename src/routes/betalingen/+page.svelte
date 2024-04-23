@@ -1,5 +1,5 @@
 <script>
-	import { Table, Button, Nav, Search } from '$lib/index.js';
+	import { Table, Button, Header } from '$lib/index.js';
 	export let data;
 
 	const tellerstand = data.hygraphData.subscriptionCounters[0];
@@ -20,8 +20,7 @@
 </script>
 
 <header>
-	<Nav />
-	<Search
+	<Header
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
 </header>
