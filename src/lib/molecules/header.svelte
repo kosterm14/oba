@@ -25,7 +25,7 @@
 		const searchButtonClose = document.querySelector('#search-closed');
 		const positionChange = document.querySelector('#search-box');
 
-		let searchField = document.querySelector('#search-overlay');
+		let searchField = document.querySelector('#mobile-search-overlay');
 
 		searchInput.addEventListener('input', submitted);
 
@@ -345,9 +345,9 @@
 	</div>
 </nav>
 
-<div id="search-overlay">
-	<div on:click={openDialog} id="search-bar" class="search-bar-mobile">
-		<form action="" on:submit={submitted} class="searchBar">
+<section id="mobile-search-overlay">
+	<div id="search-bar" class="search-bar-mobile" on:click={openDialog}>
+		<form action="" on:submit={submitted} class="search-bar-form">
 			<input
 				id="searchQueryInput"
 				class="search-input-mobile"
@@ -375,8 +375,8 @@
 	</div>
 
 	{#if showDialog}
-		<div class="mobile-model" id="model">
-			<p class="title-hero">Je zoekt: <span>{value}</span></p>
+		<div class="mobile-search-bar-data" id="model">
+			<p class="search-bar-data-title">Je zoekt: <span>{value}</span></p>
 			<!-- <article>
 			<button class="close-button" on:click={closeDialog}>X</button>
 		</article> -->
@@ -402,9 +402,9 @@
 			{/if}
 		</div>
 	{/if}
-</div>
+</section>
 
-<section id="search-field">
+<section id="desktop-search-overlay">
 	<div id="search-box">
 		<input type="checkbox" id="search" />
 		<label for="search">
@@ -437,8 +437,8 @@
 			>
 		</label>
 
-		<div on:click={openDialog} id="search-bar" class="search-bar">
-			<form action="" on:submit={submitted} class="searchBar">
+		<div id="search-bar" class="search-bar">
+			<form action="" on:submit={submitted} class="search-bar-form" on:click={openDialog}>
 				<input
 					id="searchQueryInput"
 					class="search-input"
@@ -466,8 +466,8 @@
 		</div>
 	</div>
 	{#if showDialog}
-		<div class="model" id="model">
-			<p class="title-hero">Je zoekt: <span>{value}</span></p>
+		<div class="search-bar-data" id="model">
+			<p class="search-bar-data-title">Je zoekt: <span>{value}</span></p>
 			<!-- <article>
 				<button class="close-button" on:click={closeDialog}>X</button>
 			</article> -->
@@ -501,19 +501,18 @@
 		margin-left: 100px;
 		transition: all 0.5s ease;
 		position: fixed;
-
 	}
-	#check:checked ~ #search-field #model {
+
+	#check:checked ~ #desktop-search-overlay #model {
 		margin-left: 225px;
 	}
 
 	/* HAMBURG SEARCH-BAR*/
-	label #search-closed,
-	label #search-open {
+	.search-hamburg-closed,
+	.search-hamburg-open {
 		position: absolute;
 		cursor: pointer;
 		color: white;
-
 		font-size: 29px;
 		background-color: var(--primary-transparent-color-2);
 		height: 50px;
@@ -526,48 +525,55 @@
 		justify-content: center;
 		z-index: 80;
 	}
-	label #search-closed {
+
+	.search-hamburg-closed {
 		border-radius: 0 0 0 5px;
 	}
-	label #search-open {
+
+	label .search-hamburg-open {
 		border-radius: 0 0 5px 5px;
 	}
+
 	#search {
 		display: none;
 	}
+
 	#search-bar {
 		transition: all 0.8s ease;
 	}
 
-	label #search-closed {
+	label .search-hamburg-closed {
 		opacity: 0;
 		visibility: hidden;
 	}
-	#search:checked ~ label #search-open {
+
+	#search:checked ~ label .search-hamburg-open {
 		opacity: 0;
 		visibility: hidden;
 	}
-	#search:checked ~ label #search-closed {
+
+	#search:checked ~ label .search-hamburg-closed {
 		opacity: 1;
 		visibility: visible;
 		height: 50px;
 		width: 50px;
 	}
+
 	#search:checked ~ #search-bar {
 		width: 21.25rem;
 	}
+
 	#search:checked ~ div .search-submit {
 		width: 3.5rem;
 		height: 2.8rem;
 	}
+
 	#search:checked ~ div .search-input {
 		padding: 0 3.5rem 0 1.5rem;
 	}
 	/* END HAMBURG */
 
 	/* SEARCHBAR */
-	.search-bar-mobile {
-	}
 	.search-bar {
 		position: absolute;
 		width: 0;
@@ -579,15 +585,7 @@
 		width: 100%;
 	}
 
-	.label {
-		font-size: 0.625rem;
-		font-weight: 400;
-		text-transform: uppercase;
-		letter-spacing: +1.3px;
-		margin-bottom: 1rem;
-	}
-
-	.searchBar {
+	.search-bar-form {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
@@ -645,12 +643,12 @@
 		margin-left: 325px;
 	}
 
-	#search-field {
+	#desktop-search-overlay {
 		position: relative;
 		transition: all 0.5s ease;
 	}
 
-	.model {
+	.search-bar-data {
 		backdrop-filter: blur(10px); /* Adjust the blur amount as needed */
 		-webkit-backdrop-filter: blur(10px); /* Safari support */
 		/* Fallback for browsers that do not support backdrop-filter */
@@ -672,8 +670,8 @@
 		transition: all 0.5s ease;
 	}
 
-	.model li,
-	.mobile-model li {
+	.search-bar-data li,
+	.mobile-search-bar-data li {
 		list-style: none;
 		/* border-bottom: 1px solid rgb(172, 171, 171); */
 		display: flex;
@@ -683,44 +681,44 @@
 		transition: all 0.3s ease;
 	}
 
-	.model li img,
-	.mobile-model li img {
+	.search-bar-data li img,
+	.mobile-search-bar-data li img {
 		min-width: 50px;
 	}
 
-	.model ul,
-	.mobile-model ul {
+	.search-bar-data ul,
+	.mobile-search-bar-data ul {
 		padding: 1.5rem;
 	}
 
-	.model p,
+	.search-bar-data p,
 	span,
-	.mobile-model p,
+	.mobile-search-bar-data p,
 	span {
 		color: var(--primary-light-color);
 	}
 
-	.model h2,
-	.mobile-model h2 {
+	.search-bar-data h2,
+	.mobile-search-bar-data h2 {
 		color: var(--primary-light-color);
 		padding: 1.5rem;
 		text-align: center;
 	}
 
-	.model a,
-	.mobile-model a {
+	.search-bar-data a,
+	.mobile-search-bar-data a {
 		text-decoration: none;
 		color: var(--primary-light-color);
 	}
 
-	.model h2,
-	.mobile-model h2 {
+	.search-bar-data h2,
+	.mobile-search-bar-data h2 {
 		color: var(--primary-light-color);
 		padding: 1.5rem;
 		text-align: center;
 	}
 
-	.title-hero {
+	.search-bar-data-title{
 		font:
 			700 20px 'Oswald',
 			sans-serif;
@@ -751,52 +749,7 @@
 		text-transform: capitalize;
 	}
 
-	/* tablet breakpoint */
-	@media (max-width: 960px) {
-		.model {
-			display: none;
-		}
-		#search-overlay {
-			background-color: var(--primary-accent-color);
-			width: 100vw;
-			height: 100vh;
-			position: fixed;
-			top: 0;
-			left: 0;
-			z-index: 99;
-			margin-left: 0;
-			display: none;
-		}
-
-		#search-closed:checked ~ #search-field #search-box {
-			margin-left: 10px !important;
-		}
-		.opened {
-			display: block !important;
-		}
-
-		.openend-button{
-			position: fixed !important;
-			top: 0;
-			left: 0;
-			z-index: 1000 !important;
-		}
-
-		.position-change{
-			position: static !important;
-		}
-	}
-
-	@media (min-width: 960px) {
-		#search-overlay {
-			display: none;
-		}
-		.opened {
-			display: none;
-		}
-	}
-
-	.mobile-model {
+	.mobile-search-bar-data {
 		backdrop-filter: none;
 		-webkit-backdrop-filter: none;
 		position: fixed;
@@ -816,7 +769,6 @@
 		margin-left: 0 !important;
 		margin-top: 18px;
 	}
-
 	/* END SEARCHBAR */
 
 	/* NAVIGATION MENU */
@@ -827,6 +779,7 @@
 		justify-content: space-between;
 		font: 'Oswald', sans-serif;
 	}
+
 	.sidebar {
 		position: fixed;
 		width: 250px;
@@ -843,47 +796,43 @@
 		align-items: center;
 		position: relative;
 	}
+
 	header .profile-img {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		margin-left: 40px;
 	}
+
 	header .profile-img img {
 		width: 2.7rem;
 		height: 2.7rem;
 		margin-right: 15px;
 		border-radius: 70%;
 	}
+
 	header .profile-text {
 		display: flex;
 		flex-direction: column;
 		color: white;
 	}
+
 	header .profile-text .profile-name {
 		margin-top: 2px;
 		font-size: 18px;
 		font-weight: 600;
 	}
+
 	header .profile-text .profile-role {
 		font-size: 16px;
 		margin-top: -2px;
 		display: block;
 	}
-	/* header::after {
-		content: '';
-		position: absolute;
-		width: 185px;
-		bottom: 0;
-		left: 31px;
-		background-color: white;
-		height: 0.5px;
-	} */
-	/* End Header */
 
 	.bottom-content {
 		border-top: 1px solid white;
 	}
+
 	.sidebar a {
 		display: flex;
 		height: 65px;
@@ -899,24 +848,25 @@
 		text-decoration: none;
 		align-items: center;
 	}
+
 	.menu-bar svg {
 		margin-right: 10px;
 	}
+
 	a:focus,
 	a:hover {
 		border-left: 5px solid white;
 	}
-	.sidebar a i {
-		font-size: 23px;
-		margin-right: 16px;
-	}
+
 	.menu-bar a span {
 		letter-spacing: 1px;
 		text-transform: uppercase;
 	}
+
 	#check {
 		display: none;
 	}
+
 	label #btn,
 	label #cancel {
 		position: fixed;
@@ -936,18 +886,22 @@
 		justify-content: center;
 		z-index: 99;
 	}
+
 	label #cancel {
 		opacity: 0;
 		visibility: hidden;
 	}
+
 	#check:checked ~ .sidebar {
 		left: 0;
 	}
+
 	#check:checked ~ label #btn {
 		margin-left: 250px;
 		opacity: 0;
 		visibility: hidden;
 	}
+
 	#check:checked ~ label #cancel {
 		margin-left: 250px;
 		opacity: 1;
@@ -955,4 +909,52 @@
 		border-radius: 0 0 5px 0;
 	}
 	/* EIND NAVIGATION MENU */
+
+	/* tablet breakpoint */
+	@media (max-width: 960px) {
+		.search-bar-data {
+			display: none;
+		}
+
+		#mobile-search-overlay {
+			background-color: var(--primary-accent-color);
+			width: 100vw;
+			height: 100vh;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 99;
+			margin-left: 0;
+			display: none;
+		}
+
+		.search-hamburg-closed:checked ~ #desktop-search-overlay #search-box {
+			margin-left: 10px !important;
+		}
+
+		.opened {
+			display: block !important;
+		}
+
+		.openend-button {
+			position: fixed !important;
+			top: 0;
+			left: 0;
+			z-index: 1000 !important;
+		}
+
+		.position-change {
+			position: static !important;
+		}
+	}
+
+	@media (min-width: 960px) {
+		#mobile-search-overlay {
+			display: none;
+		}
+
+		.opened {
+			display: none;
+		}
+	}
 </style>
