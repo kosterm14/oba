@@ -2,7 +2,7 @@
     export let data; // Assuming this is your search data
 
     const results = data.results
-    import { Card, Nav, Search} from '$lib/index.js'
+    import { Card, Header} from '$lib/index.js'
 
 	import { onMount } from 'svelte';
     
@@ -11,7 +11,7 @@
 </script>
 
 <header>
-    <Nav />
+    <Header />
     <!-- menu  -->
 </header>
 

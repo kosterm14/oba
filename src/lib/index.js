@@ -8,7 +8,7 @@ export { default as Toggle } from './atoms/toggle.svelte';
 // Hier export je alle molecules ------------------------------------------------------------------------------------------------------------
 // Hier export je alle molecules ------------------------------------------------------------------------------------------------------------
 // Hier export je alle molecules ------------------------------------------------------------------------------------------------------------
-export { default as Search } from './molecules/search.svelte';
+export { default as Header } from './molecules/header.svelte';
 export { default as Card } from './molecules/card.svelte';
 export { default as ReservationCard } from './molecules/reservationCard.svelte';
 export { default as Table } from './molecules/table.svelte';
