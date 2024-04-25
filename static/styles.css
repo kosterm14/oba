@@ -13,6 +13,7 @@
 	--primary-table-border-radius: 1rem;
 	--primary-transparent-color: linear-gradient(90deg, #f2f5ff 40%, rgba(255, 255, 255, 0) 100%);
 	--primary-transparent-color-after: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #f2f5ff 50%);
+	--primary-transparent-color-2: rgba(0,100,200, 0.9);
 }
 
 body {
@@ -25,6 +26,8 @@ body {
 	--primary-accent-color-btn: #000000;
 	--primary-transparent-color: linear-gradient(90deg, #F0F0F0 40%, rgba(255, 255, 255, 0) 100%);
 	--primary-transparent-color-after: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F0F0F0 50%);
+	--primary-transparent-color-2: rgba(255, 0, 0, 0.9);
+
 }
 
 * {
