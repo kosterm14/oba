@@ -6,8 +6,7 @@
 		LogoBlue,
 		LogoRed,
 		LogoBlack,
-		Search,
-		Nav,
+		Header,
 		HeroLogo
 	} from '$lib/index.js';
 	import { onMount } from 'svelte';
@@ -55,8 +54,8 @@
 </script>
 
 <header>
-	<Nav />
-	<Search
+	<!-- <Nav /> -->
+	<Header
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
 	<!-- menu  -->
@@ -346,6 +345,10 @@
 		margin-inline-start: 15px;
 	}
 
+	#voorbeeld-4 {
+		position: relative;
+	}
+
 	.icon {
 		height: 45px;
 		width: 45px;
@@ -414,9 +417,8 @@
 	.side-trans-white::before,
 	.side-trans-white::after {
 		content: '';
-		z-index: 99;
+		z-index: 10;
 		position: absolute;
-		top: 0;
 		left: -0.5rem;
 		width: 3rem;
 		height: 100%;
@@ -433,9 +435,8 @@
 	.side-trans-blue::before,
 	.side-trans-blue::after {
 		content: '';
-		z-index: 99;
+		z-index: 10;
 		position: absolute;
-		top: 0;
 		left: -0.5rem;
 		width: 3rem;
 		height: 100%;

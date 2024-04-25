@@ -1,11 +1,10 @@
 <script>
-	import { SmallCarrousel, Table, Nav, Search } from '$lib/index.js';
+	import { SmallCarrousel, Table, Header} from '$lib/index.js';
 	export let data;
 </script>
 
 <header>
-	<Nav />
-	<Search
+	<Header
 		cardData={data.apiBooks.results.concat(data.apiEBooks.results, data.apiAudioBooks.results)}
 	/>
 	<!-- menu  -->
