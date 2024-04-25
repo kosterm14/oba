@@ -5,7 +5,7 @@
     <main>
         <h1>{$page.error.message}</h1>
         <p>Deze pagina bestaat niet</p>
-    </main>
+    </main> 
 
 <style>
     h1,
