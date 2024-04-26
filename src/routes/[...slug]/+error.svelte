@@ -3,14 +3,37 @@
 
 	function goBack() {
 		window.history.back();
-	}
+	}	
 
 	function navigateTo(url) {
 		window.location.href = url;
 	}
+
+	let pathParts = $page.url.pathname.split('/').filter(Boolean);
+
+	function isCurrentPage(index) {
+		return index === pathParts.length - 1;
+	}
 </script>
 
 <body>
+	<nav>
+		<ul>
+			<li>
+				<button class="breadcrumbs {pathParts.length === 0 ? 'current' : ''}" on:click={() => navigateTo('/')}>home</button>
+			</li>
+			{#each pathParts as part, index (index)}
+				<li>
+					<button
+						class="breadcrumbs {isCurrentPage(index) ? 'current' : ''}"
+						on:click={() => navigateTo(`/${pathParts.slice(0, index + 1).join('/')}`)}
+						>{part}</button
+					>
+				</li>
+			{/each}
+		</ul>
+	</nav>
+
 	<main>
 		<h1>Oeps, deze pagina bestaat niet</h1>
 		<section>
@@ -30,7 +53,8 @@
 <style>
 	h1,
 	p,
-	button {
+	button,
+	nav {
 		font-family: 'Poppins', sans-serif;
 	}
 
@@ -39,15 +63,34 @@
 		margin: 0;
 	}
 
-    body {
-        background-color: #f2f5ff;
-    }
+	body {
+		background-color: #f2f5ff;
+	}
+
+	nav {
+		width: fit-content;
+	}
+
+	ul {
+		display: flex;
+	}
+
+	li {
+		list-style-type: none;
+		padding: 0.3rem;
+	}
+
+	li:not(:first-child)::before {
+    content: ' > ';
+    font-size: 1.5rem;
+}
 
 	main {
 		margin-top: 5rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		height: 90vh;
 	}
 
 	.backButton {
@@ -73,5 +116,16 @@
 		padding: 0.5rem 0;
 		font-size: 1rem;
 		text-decoration: underline;
+	}
+
+	.breadcrumbs {
+		color: #0051a8;
+		text-decoration: none;
+		font-size: 1.5rem;
+	}
+
+	.current {
+		font-weight: bold;
+		color: #222222;
 	}
 </style>
