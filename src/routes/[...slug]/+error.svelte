@@ -1,60 +1,31 @@
 <script>
-	import { page } from '$app/stores';
-
-	function goBack() {
-		window.history.back();
-	}	
-
-	function navigateTo(url) {
-		window.location.href = url;
-	}
-
-	let pathParts = $page.url.pathname.split('/').filter(Boolean);
-
-	function isCurrentPage(index) {
-		return index === pathParts.length - 1;
-	}
+	import { BreadCrumbs } from '$lib/index.js';
 </script>
 
 <body>
 	<nav>
-		<ul>
-			<li>
-				<button class="breadcrumbs {pathParts.length === 0 ? 'current' : ''}" on:click={() => navigateTo('/')}>home</button>
-			</li>
-			{#each pathParts as part, index (index)}
-				<li>
-					<button
-						class="breadcrumbs {isCurrentPage(index) ? 'current' : ''}"
-						on:click={() => navigateTo(`/${pathParts.slice(0, index + 1).join('/')}`)}
-						>{part}</button
-					>
-				</li>
-			{/each}
-		</ul>
+		<BreadCrumbs />
 	</nav>
 
-	<main>
+	<main data-sveltekit-reload>
 		<h1>Oeps, deze pagina bestaat niet</h1>
 		<section>
 			<p>
-				Ga terug naar de <button on:click={() => navigateTo('/')}>homepage</button> of gebruik de zoekfunctie.
+				Ga terug naar de <a href="/">homepage</a> of gebruik de zoekfunctie.
 			</p>
 
 			<p>
-				Je kunt natuurlijk ook altijd
-				<button on:click={() => navigateTo('/chatbot')}>contact</button> met ons opnemen.
+				Je kunt natuurlijk ook altijd <a href="/">contact</a> met ons opnemen.
 			</p>
 		</section>
-		<button class="backButton" on:click={goBack}>Terug naar de vorige pagina</button>
+		<a class="backButton" href="javascript:window.history.back()">Terug naar de vorige pagina</a>
 	</main>
 </body>
 
 <style>
 	h1,
 	p,
-	button,
-	nav {
+	a {
 		font-family: 'Poppins', sans-serif;
 	}
 
@@ -66,24 +37,6 @@
 	body {
 		background-color: #f2f5ff;
 	}
-
-	nav {
-		width: fit-content;
-	}
-
-	ul {
-		display: flex;
-	}
-
-	li {
-		list-style-type: none;
-		padding: 0.3rem;
-	}
-
-	li:not(:first-child)::before {
-    content: ' > ';
-    font-size: 1.5rem;
-}
 
 	main {
 		margin-top: 5rem;
@@ -109,23 +62,12 @@
 		background-color: #0051a8;
 	}
 
-	button {
+	a {
 		background-color: transparent;
 		border: none;
 		cursor: pointer;
 		padding: 0.5rem 0;
 		font-size: 1rem;
 		text-decoration: underline;
-	}
-
-	.breadcrumbs {
-		color: #0051a8;
-		text-decoration: none;
-		font-size: 1.5rem;
-	}
-
-	.current {
-		font-weight: bold;
-		color: #222222;
 	}
 </style>

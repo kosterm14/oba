@@ -1,25 +1,21 @@
 <script>
 	import { LinkButton, LogoBlue } from '$lib/index.js';
-
-	function navigateTo(url) {
-        window.location.href = url;
-    }
 </script>
 
 <footer>
 	<article>
-		<nav>
-			<button on:click={() => navigateTo('/')}>Home</button>
-            <button on:click={() => navigateTo('/leeslijst')}>Leeslijst</button>
-            <button on:click={() => navigateTo('/uitleningen')}>Uitleningen</button>
-            <button on:click={() => navigateTo('/reserveringen')}>Reserveringen</button>
-            <button on:click={() => navigateTo('/betalingen')}>Betalingen</button>
+		<nav data-sveltekit-reload>
+			<a href="/">Home</a>
+			<a href="/leeslijst">Leeslijst</a>
+			<a href="/uitleningen">Uitleningen</a>
+			<a href="/reserveringen">Reserveringen</a>
+			<a href="/betalingen">Betalingen</a>
 		</nav>
 	</article>
 	<article>
-		<button on:click={() => navigateTo('/')}>
-            <img src={LogoBlue} alt="oba logo" width="200" />
-        </button>
+		<a href="/">
+			<img src={LogoBlue} alt="oba logo" width="200" />
+		</a>
 	</article>
 </footer>
 
@@ -41,7 +37,8 @@
 		padding: 1rem;
 	}
 
-	nav, button {
+	nav,
+	button {
 		display: flex;
 		flex-direction: column;
 	}
