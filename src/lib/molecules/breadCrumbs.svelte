@@ -8,11 +8,11 @@
 
 	onMount(() => {
 		previousPages = JSON.parse(sessionStorage.getItem('previousPages')) || [];
-		let currentPage = $page.url.pathname.slice(1); // Remove the leading '/'
+		let currentPage = $page.url.pathname.slice(1);
 		if (previousPages[previousPages.length - 1] !== currentPage) {
 			previousPages.push(currentPage);
 		}
-		if (previousPages.length >= 3) { // Ensure there are at least 3 breadcrumbs
+		if (previousPages.length >= 3) {
 			hasMorePages = true;
 			if (previousPages.length > 3) {
 				previousPages.shift();
@@ -33,7 +33,7 @@
 	<ul>
 		{#each pathParts as part, index (index)}
 			<li>
-				{#if hasMorePages && index === 0} <!-- If there are at least 3 breadcrumbs, display '...' -->
+				{#if hasMorePages && index === 0}
 					<span>...</span>
 				{/if}
 				<a
